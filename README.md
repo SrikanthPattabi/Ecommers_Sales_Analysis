@@ -1,96 +1,133 @@
-# E-Commerce Sales Dashboard — Portfolio Project
+# 🛒 E-Commerce Sales Dashboard
 
-## Project Summary
-
-This project showcases an interactive **E-Commerce Sales Dashboard** built using Power BI to analyze online sales data and generate actionable business insights. The goal was to transform raw transactional data into meaningful visual reports that help stakeholders track performance, understand customer behavior, and make data-driven decisions.
+A Power BI dashboard analyzing U.S. e-commerce sales performance across **FY 2021–2022**, built with DAX, Power Query, and interactive visualizations.
 
 ---
 
-## Problem Statement
+## 📊 Overview
 
-E-commerce businesses generate large volumes of sales data, but raw data alone cannot support strategic decisions. This project solves that problem by creating a centralized dashboard that highlights key performance indicators, sales trends, and customer insights in a clear and interactive format.
-
----
-
-## Tools & Skills Applied
-
-* **Power BI** — Dashboard design & data visualization
-* **Power Query** — Data cleaning & transformation
-* **DAX** — KPI calculations & data modeling
-* **Data Analysis** — Trend analysis & business insights
-* **Data Visualization** — Charts, maps, slicers & drill-down reports
+| Metric | Value |
+|---|---|
+| 💰 Total Sales | $23.16 Million |
+| 📈 Total Profit | $2.61 Million |
+| 🧾 Profit Margin | 11.3% |
+| 📦 Total Orders | 113,270 |
+| 👥 Unique Customers | 42,047 |
+| 🗺️ States Covered | 49 U.S. States |
+| 📅 Period | Jan 2021 – Dec 2022 |
 
 ---
 
-## Key Features
+## 📁 Files in This Repository
 
-* **Sales Overview:** Revenue, profit, order volume, and growth trends
-* **Product Analysis:** Top-performing products and category contribution
-* **Customer Insights:** Repeat customers, purchase behavior, revenue contribution
-* **Regional Performance:** Location-wise sales distribution using map visuals
-* **Time Trends:** Monthly and yearly sales performance analysis
-
----
-
-## KPIs Developed
-
-* Total Revenue
-* Total Profit
-* Profit Margin %
-* Total Orders
-* Average Order Value
-* Sales Growth Rate
+```
+├── ECOMMERCE_SALES_DASHBOARD.pbix     # Power BI dashboard file
+├── ecommerce_data.csv                 # Main transactional dataset (113K rows)
+├── ecommerce_data_excel.xlsx          # Excel version of the dataset
+├── us_state_long_lat_codes.csv        # State lat/long for map visuals
+├── Final_Back.jpg                     # Dashboard background image
+└── IMPORTANT_POINT_TO_NOTE.docx       # Setup notes for Power BI import
+```
 
 ---
 
-## Data Preparation
+## 🗂️ Dataset Columns
 
-* Cleaned missing and inconsistent data
-* Removed duplicates
-* Standardized date and currency formats
-* Built calculated measures using DAX
-
----
-
-## Business Value
-
-This dashboard enables businesses to:
-
-* Identify high-revenue products
-* Track performance trends
-* Optimize marketing strategies
-* Understand customer purchasing patterns
-* Improve regional sales planning
+| Column | Description |
+|---|---|
+| `customer_id` | Unique customer identifier |
+| `category_name` | Product category (Office Supplies, Furniture, Technology) |
+| `customer_segment` | Consumer / Corporate / Home Office |
+| `customer_state / region` | Geographic location |
+| `order_date` | Date of order placement |
+| `delivery_status` | On time / Late / Advance / Canceled |
+| `shipping_type` | Standard / Second / First / Same Day |
+| `sales_per_order` | Revenue per order |
+| `profit_per_order` | Profit per order |
+| `order_quantity` | Units ordered |
 
 ---
 
-## Outcome
+## ⚙️ Setup Instructions
 
-The project demonstrates my ability to clean data, build data models, create KPIs, and design professional dashboards that convert raw data into strategic insights.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-username/ecommerce-sales-dashboard.git
+cd ecommerce-sales-dashboard
+```
 
----
+### 2. Open in Power BI
+- Open `ECOMMERCE_SALES_DASHBOARD.pbix` in **Power BI Desktop**
+- If prompted, update the data source path to your local folder
 
-## My Role
+### 3. Important Notes ⚠️
+> From `IMPORTANT_POINT_TO_NOTE.docx`:
+- Make sure the `order_date` field has the data type set to **Date** in Power BI
+- Verify that **all dates are fully imported** in both SQL and Power BI before refreshing
 
-As the Data Analyst on this project, I handled:
-
-* Data cleaning and preprocessing
-* Data modeling and KPI creation
-* Dashboard layout design
-* Insight generation and reporting
-
----
-
-## File Format
-
-Power BI Dashboard File (.pbix)
-
----
-
-## Ideal For
-
-This project is suitable for showcasing skills in:
-**Data Analytics | Business Intelligence | Power BI | Sales Analytics | Dashboard Development**
+### 4. Refresh Data
+- Go to **Home → Refresh** to load the latest data
 
 ---
 
+## 🧮 DAX Measures
+
+```dax
+Total Sales = SUM(ecommerce_data[sales_per_order])
+
+Total Profit = SUM(ecommerce_data[profit_per_order])
+
+Profit Margin = DIVIDE([Total Profit], [Total Sales], 0)
+
+Total Orders = COUNTROWS(ecommerce_data)
+```
+
+### Date Table
+```dax
+DateTable =
+ADDCOLUMNS(
+    CALENDAR(DATE(2021, 1, 1), DATE(2022, 12, 31)),
+    "Year",    YEAR([Date]),
+    "Month",   FORMAT([Date], "MMMM"),
+    "Quarter", "Q" & ROUNDUP(MONTH([Date]) / 3, 0)
+)
+```
+> Mark this table as a **Date Table** via Table Tools → Mark as Date Table
+
+---
+
+## 📈 Key Insights
+
+- 🥇 **Office Supplies** is the top category — $13.9M (60% of revenue)
+- 🌍 **West region** leads geographically at $7.4M
+- 🏆 **California** is the #1 state with $4.65M in sales
+- 👤 **Consumer segment** drives 51.8% of all revenue
+- ⚠️ **54.8% of orders had late delivery** — the biggest operational issue
+- 📅 **October 2022** was the strongest month at $1.11M
+
+---
+
+## 🗺️ Dashboard Visuals
+
+- KPI Cards — Sales, Profit, Margin, Orders
+- Bar Chart — Sales by Category
+- Donut Chart — Customer Segment split
+- Map Visual — Revenue by U.S. State
+- Line Chart — Monthly Sales Trend (2021 vs 2022)
+- Delivery Status Breakdown
+- Slicers — Year, Region, Category, Segment
+
+---
+
+## 🛠️ Tech Stack
+
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=flat&logo=powerbi&logoColor=black)
+![DAX](https://img.shields.io/badge/DAX-0078D4?style=flat&logo=microsoft&logoColor=white)
+![Excel](https://img.shields.io/badge/Excel-217346?style=flat&logo=microsoftexcel&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat&logo=mysql&logoColor=white)
+
+---
+
+## 📄 License
+
+This project is for educational and portfolio purposes.
